@@ -10,20 +10,21 @@ public class AddNewContactScreen extends BaseScreen{
         super(driver);
     }
 
-    @FindBy()
+    @FindBy(id="com.sheygam.contactapp:id/inputName")
     AndroidElement nameEditText;
-    @FindBy()
+    @FindBy(id="com.sheygam.contactapp:id/inputLastName")
     AndroidElement lastnameEditText;
-    @FindBy()
+    @FindBy(id="com.sheygam.contactapp:id/inputEmail")
     AndroidElement emailEditText;
-    @FindBy()
+    @FindBy(id="com.sheygam.contactapp:id/inputPhone")
     AndroidElement phoneEditText;
-    @FindBy()
+    @FindBy(id="com.sheygam.contactapp:id/inputAddress")
     AndroidElement addressEditText;
-    @FindBy()
+    @FindBy(id="com.sheygam.contactapp:id/inputDesc")
     AndroidElement descriptionEditText;
-    @FindBy()
+    @FindBy(id="com.sheygam.contactapp:id/createBtn")
     AndroidElement createBtn;
+
 
     public AddNewContactScreen fillContactForm(Contact contact){
         should(nameEditText,5);
@@ -38,5 +39,16 @@ public class AddNewContactScreen extends BaseScreen{
     public ContactListScreen submitContactForm(){
         createBtn.click();
         return new ContactListScreen(driver);
+    }
+
+    public AddNewContactScreen submitContactFormNegative() {
+        createBtn.click();
+
+        return this;
+    }
+    public AddNewContactScreen isErrorMessageHasText(String text) {
+        checkAlertText(text);
+
+        return this;
     }
 }
