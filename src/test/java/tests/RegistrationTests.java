@@ -11,37 +11,70 @@ import screens.ContactListScreen;
 import java.util.Random;
 
 public class RegistrationTests extends AppiumConfig {
-    int i=new Random().nextInt(1000)+1000;
 
     @Test
-    public void RegistrationTestSuccess(){
-        int i=new Random().nextInt(1000)+1000;
+    public void registrationSuccess(){
+        int i = new Random().nextInt(1000)+1000;
+
         boolean result = new AuthenticationScreen(driver)
-                .fillEmail("sonicboom"+i+"@gmail.com")
-                .fillPassword("Snow123456!")
+                .fillEmail("dex"+i+"@mail.com")
+                .fillPassword("Ww12345$")
                 .submitRegistartion()
                 .isActivityTitle("Contact list");
         Assert.assertTrue(result);
 
     }
     @Test
+    public void registrationSuccessModel(){
+        int i = new Random().nextInt(1000)+1000;
+
+        Auth auth = Auth.builder().email("dod"+i+"@mail.com").password("Dd12345$").build();
+
+        boolean result = new AuthenticationScreen(driver)
+                .fillLoginRegistrationForm(auth)
+                .submitRegistartion()
+                .isActivityTitle("Contact list");
+        Assert.assertTrue(result);
+    }
+
+    @Test
     public void registrationWrongEmail(){
+
+        Auth auth = Auth.builder().email("dodmail.com").password("Dod123456$").build();
+
         new AuthenticationScreen(driver)
-                .fillLoginRegistrationForm(Auth.builder().email("sonicboomgmail.com").password("Snow123456!").build())
+                .fillLoginRegistrationForm(auth)
                 .submitRegistrationNegative()
-                .isErrorMessageHasText("username=must be a well-formed email address");
+                .isErrorMessageHasText("must be a well-formed email address");
 
     }
+
     @Test
     public void registrationWrongPassword(){
+
+        Auth auth = Auth.builder().email("dod@mail.com").password("Dd1234").build();
+
         new AuthenticationScreen(driver)
-                .fillLoginRegistrationForm(Auth.builder().email("sonicboom@gmail.com").password("Snow123456").build())
+                .fillLoginRegistrationForm(auth)
                 .submitRegistrationNegative()
                 .isErrorMessageHasText("At least 8 characters");
 
     }
+    @Test
+    public void registrationExistsUser(){
+
+        Auth auth = Auth.builder().email("mara@gmail.com").password("Mmar123456$").build();
+
+        new AuthenticationScreen(driver)
+                .fillLoginRegistrationForm(auth)
+                .submitRegistrationNegative()
+                .isErrorMessageHasText("User already exists");
+
+    }
     @AfterMethod
-    public void postConditioin(){
-        new ContactListScreen(driver).logout();
+    public void postCondition(){
+        new ContactListScreen(driver)
+                .logout();
+
     }
 }

@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.List;
+
 public class BaseScreen {
     AppiumDriver<AndroidElement> driver;
     public BaseScreen(AppiumDriver<AndroidElement> driver){
@@ -24,6 +26,8 @@ public class BaseScreen {
             element.sendKeys(text);
 
         driver.hideKeyboard();
+
+
 
 
     }
@@ -45,5 +49,22 @@ public class BaseScreen {
         driver.switchTo().alert();
         Assert.assertTrue(alert.getText().contains(text));
         alert.accept();
+    }
+    public boolean isElementDisplayed(AndroidElement element) {
+        try {
+            should(element, 5);
+            return element.isDisplayed();
+        } catch (IllegalAccessError e) {
+            return false;
+        }
+    }
+
+
+//    public boolean isElementPresentInList(By locator){
+//        return driver.findElements(locator).size()>0;
+//    }
+
+    public boolean isElementPresentInList(List<AndroidElement> list) {
+        return list.size() > 0;
     }
 }

@@ -3,10 +3,10 @@ package tests;
 import config.AppiumConfig;
 import models.Auth;
 import models.Contact;
-import org.testng.Assert;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
+
 import org.testng.annotations.Test;
 import screens.AuthenticationScreen;
 import screens.ContactListScreen;
@@ -72,7 +72,7 @@ public class AddNewContactsTests extends AppiumConfig {
                 .fillContactForm(contact)
                 .submitContactFormNegative()
                 .isErrorMessageHasText("name=must not be blank");
-
+        driver.navigate().back();
     }
     @AfterClass
     public void postCondition(){
